@@ -7,6 +7,9 @@ build/
 ### 파일 저장소
 data/member
 
+### 설정 파일
+
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
