@@ -22,7 +22,9 @@ jobs:
           java-version: 17
 
       - name: application.yml 파일 저장
-        run: echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
+        run: |
+          mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
 
       - name: 테스트 및 빌드하기
         run: ./gradlew clean build -x test
@@ -42,13 +44,10 @@ jobs:
       # ec2에 접속
       - name: SSH
         uses: appleboy/ssh-action@v1.0.3
-        env:
-          APPLICATION_YML: ${{ secrets.APPLICATION_YML}}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY}}
-          envs: APPLICATION_YML
           script_stop: true
           script:
             rm -rf /home/ubuntu/seahee.baek_fork/current
